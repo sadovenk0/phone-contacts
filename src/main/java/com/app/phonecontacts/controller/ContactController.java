@@ -1,7 +1,9 @@
 package com.app.phonecontacts.controller;
 
+import com.app.phonecontacts.model.dto.contact.ContactMapper;
 import com.app.phonecontacts.model.dto.contact.ContactRequest;
 import com.app.phonecontacts.model.dto.contact.ContactResponse;
+import com.app.phonecontacts.service.ContactService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,12 +15,16 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/v1/contact")
 public class ContactController {
+    private final ContactMapper mapper;
+    private final ContactService service;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ContactResponse create(
             @RequestBody @Valid ContactRequest request
     ) {
-        // ToDo
+//        var contact = mapper.contactRequestToContact(request);
+//        return mapper.contactToContactResponse(service.create(contact));
         return new ContactResponse();
     }
 

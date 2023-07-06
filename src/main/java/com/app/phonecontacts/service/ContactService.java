@@ -14,7 +14,7 @@ import java.util.List;
 public class ContactService {
     private final ContactRepository repository;
 
-    public Contact create(Contact contact, long ownerId) {
+    public Contact create(Contact contact) {
         if (contact != null) {
             contact.setOwner("isNeededToBeChanged");
             return repository.save(contact);

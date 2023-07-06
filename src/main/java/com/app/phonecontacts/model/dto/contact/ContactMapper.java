@@ -10,7 +10,8 @@ import java.util.stream.Stream;
 
 @Mapper(componentModel = "spring")
 public interface ContactMapper {
-    @Mapping(target = "emails", source = "task.emails")
+    @Mapping(target = "emails", source = "emails", qualifiedByName = "stringToList")
+    @Mapping(target = "numbers", source = "numbers", qualifiedByName = "stringToList")
     ContactResponse contactToContactResponse(Contact task);
 
     @Mapping(target = "emails", source = "emails", qualifiedByName = "listToString")
