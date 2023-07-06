@@ -1,4 +1,4 @@
-package com.app.phonecontacts.model;
+package com.app.phonecontacts.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

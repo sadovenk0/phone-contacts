@@ -1,9 +1,6 @@
 package com.app.phonecontacts.model.security;
 
-import com.app.phonecontacts.model.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.app.phonecontacts.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

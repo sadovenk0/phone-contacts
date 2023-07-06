@@ -1,6 +1,6 @@
 package com.app.phonecontacts.service;
 
-import com.app.phonecontacts.model.User;
+import com.app.phonecontacts.model.entity.User;
 import com.app.phonecontacts.model.security.UserDetailsImpl;
 import com.app.phonecontacts.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserDetailsImplService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     @Autowired
-    public UserDetailsImplService(UserRepository userRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

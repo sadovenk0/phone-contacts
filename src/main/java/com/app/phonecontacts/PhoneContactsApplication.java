@@ -1,6 +1,6 @@
 package com.app.phonecontacts;
 
-import com.app.phonecontacts.model.User;
+import com.app.phonecontacts.model.entity.User;
 import com.app.phonecontacts.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
