@@ -5,13 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter @Setter @NoArgsConstructor
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -27,7 +28,7 @@ public class User {
 
     @Pattern(regexp = ".*[a-z].*",
             message = "Must contain at least one lowercase letter")
-    @NotEmpty(message = "The 'login' cannot be empty")
+    @NotEmpty(message = "The 'password' cannot be empty")
     @Column(name = "password", nullable = false)
     private String password;
 
