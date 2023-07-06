@@ -1,5 +1,6 @@
 package com.app.phonecontacts.config;
 
+import com.app.phonecontacts.auth.JwtFilter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -23,6 +26,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
+    public final JwtFilter jwtFilter;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -34,6 +38,7 @@ public class SecurityConfig {
                 )
                 .httpBasic(withDefaults())
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
