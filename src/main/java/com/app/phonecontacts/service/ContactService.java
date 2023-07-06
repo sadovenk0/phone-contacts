@@ -1,6 +1,9 @@
 package com.app.phonecontacts.service;
 
+import com.app.phonecontacts.exception.DuplicateItemsException;
 import com.app.phonecontacts.exception.NullEntityReferenceException;
+import com.app.phonecontacts.model.dto.contact.ContactRequest;
+import com.app.phonecontacts.model.dto.user.UserRequest;
 import com.app.phonecontacts.model.entity.Contact;
 import com.app.phonecontacts.model.entity.User;
 import com.app.phonecontacts.model.security.UserDetailsImpl;
@@ -52,5 +55,18 @@ public class ContactService {
     @PostFilter("filterObject.owner.id == authentication.principal.user.id")
     public List<Contact> getAll() {
         return repository.findAll();
+    }
+
+    public ContactRequest hasDuplicate(ContactRequest request) {
+        var distinctEmails = request.getEmails().stream().distinct().toList();
+        var distinctNumbers = request.getNumbers().stream().distinct().toList();
+
+        if (distinctEmails.size() != request.getEmails().size() ||
+            distinctNumbers.size() != request.getNumbers().size()
+        ) {
+            throw new DuplicateItemsException("Numbers and emails should not be duplicated.");
+        }
+
+        return request;
     }
 }

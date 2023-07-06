@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -21,12 +23,12 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
     }
 
-    public User readByLogin(String login) {
-        return userRepository.findByLogin(login).orElse(null);
+    public Optional<User> readByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 
     public User create(User user) {
-        if (user != null && readByLogin(user.getLogin()) == null) {
+        if (user != null && readByLogin(user.getLogin()).isEmpty()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRole("USER");
             return userRepository.save(user);

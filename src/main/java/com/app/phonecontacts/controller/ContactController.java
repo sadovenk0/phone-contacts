@@ -29,7 +29,7 @@ public class ContactController {
             @RequestBody @Valid ContactRequest request
     ) {
         var ownerId = ((UserDetailsImpl) auth.getPrinciple()).getUser().getId();
-        var contact = mapper.contactRequestToContact(request);
+        var contact = mapper.contactRequestToContact(service.hasDuplicate(request));
         return mapper.contactToContactResponse(service.create(contact, ownerId));
     }
 
@@ -39,7 +39,7 @@ public class ContactController {
             @RequestBody @Valid ContactRequest request,
             @PathVariable long id
     ) {
-        var contactToUpdate = mapper.contactRequestToContact(request);
+        var contactToUpdate = mapper.contactRequestToContact(service.hasDuplicate(request));
         return mapper.contactToContactResponse(service.update(contactToUpdate, id));
     }
 
