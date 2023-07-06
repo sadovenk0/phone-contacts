@@ -1,27 +1,36 @@
 package com.app.phonecontacts.controller;
 
+import com.app.phonecontacts.model.dto.user.UserMapper;
+import com.app.phonecontacts.model.dto.user.UserRequest;
 import com.app.phonecontacts.model.dto.utils.TokenResponse;
+import com.app.phonecontacts.service.AuthenticationService;
 import com.app.phonecontacts.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-    private final UserService userService;
+    public final AuthenticationService service;
+    public final UserMapper userMapper;
 
     @PostMapping("/registration")
-    public Object registration() {
-        // ToDo: add user creation
-        return new Object();
+    public TokenResponse registration(@RequestBody UserRequest request) {
+        return service.registration(userMapper.userRequestToUser(request));
     }
 
     @PostMapping("/login")
-    public TokenResponse login() {
-        // ToDo: add token generation
-        return new TokenResponse();
+    public TokenResponse login(@RequestBody UserRequest request) {
+        return service.authenticate(request);
     }
+
+
+
+
 }

@@ -50,7 +50,6 @@ public class JwtFilter extends GenericFilterBean {
         log.info("**doFilter done");
     }
 
-
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearer = request.getHeader(AUTHORIZATION);
         if (hasText(bearer) && bearer.startsWith(BEARER)) {

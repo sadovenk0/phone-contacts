@@ -1,6 +1,7 @@
 package com.app.phonecontacts.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -26,6 +27,7 @@ public class User {
 
     @Pattern(regexp = ".*[a-z].*",
             message = "Must contain at least one lowercase letter")
+    @NotEmpty(message = "The 'login' cannot be empty")
     @Column(name = "password", nullable = false)
     private String password;
 

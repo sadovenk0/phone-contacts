@@ -21,8 +21,7 @@ public class UserService {
     }
 
     public User readByLogin(String login) {
-        return userRepository.findByLogin(login)
-                .orElseThrow(() -> new EntityNotFoundException("User with login " + login + " not found"));
+        return userRepository.findByLogin(login).orElse(null);
     }
 
     public User create(User user) {
