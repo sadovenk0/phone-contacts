@@ -4,7 +4,6 @@ import com.app.phonecontacts.model.dto.user.UserMapper;
 import com.app.phonecontacts.model.dto.user.UserRequest;
 import com.app.phonecontacts.model.dto.utils.TokenResponse;
 import com.app.phonecontacts.service.AuthenticationService;
-import com.app.phonecontacts.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
