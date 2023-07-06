@@ -7,6 +7,7 @@ import com.app.phonecontacts.model.security.UserDetailsImpl;
 import com.app.phonecontacts.repository.ContactRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +17,7 @@ import java.util.Base64;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ContactService {
     private final ContactRepository repository;
     private final UserService userService;

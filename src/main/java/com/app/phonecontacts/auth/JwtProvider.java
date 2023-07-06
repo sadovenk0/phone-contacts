@@ -1,5 +1,7 @@
 package com.app.phonecontacts.auth;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -10,7 +12,6 @@ import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import io.jsonwebtoken.Jwts;
 
 @Slf4j
 @Component
@@ -29,41 +30,29 @@ public class JwtProvider {
     }
 
     public boolean validateToken(String token) {
-        try {
-            Jwts
-                    .parserBuilder()
-                    .setSigningKey(getSignInKey())
-                    .build()
-                    .parseClaimsJws(token);
-            return true;
-        } catch (Exception e) {
-            log.error("invalid token");
-        }
-        return false;
+        getClaims(token);
+        return true;
     }
 
     public String getLoginFromToken(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return getClaims(token).getSubject();
     }
 
     public Date getExpirationDate(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration();
+        return getClaims(token).getExpiration();
     }
 
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

@@ -2,6 +2,7 @@ package com.app.phonecontacts.config;
 
 import com.app.phonecontacts.auth.JwtFilter;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
     public final JwtFilter jwtFilter;
     @Bean
@@ -36,7 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/login", "/auth/registration", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults())
+                .httpBasic(c -> c.authenticationEntryPoint(restAuthenticationEntryPoint()))
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
