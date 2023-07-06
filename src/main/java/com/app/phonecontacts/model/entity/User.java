@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter @Setter @NoArgsConstructor
 @Entity
 @Table(name = "users")
@@ -30,7 +32,6 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    //@OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
-    //private List<Contact> contacts;
-
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+    private List<Contact> contacts;
 }

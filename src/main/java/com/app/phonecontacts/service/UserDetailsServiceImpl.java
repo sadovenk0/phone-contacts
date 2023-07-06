@@ -3,6 +3,7 @@ package com.app.phonecontacts.service;
 import com.app.phonecontacts.model.entity.User;
 import com.app.phonecontacts.model.security.UserDetailsImpl;
 import com.app.phonecontacts.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,20 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
-    @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByLogin(s);
 
-        if (user.isEmpty())
-            throw new UsernameNotFoundException("User not found");
-
-        return new UserDetailsImpl(user.get());
+        return new UserDetailsImpl(user.orElseThrow(
+                () -> new UsernameNotFoundException("User not found")));
     }
 }

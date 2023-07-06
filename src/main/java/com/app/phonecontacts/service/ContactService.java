@@ -2,21 +2,28 @@ package com.app.phonecontacts.service;
 
 import com.app.phonecontacts.exception.NullEntityReferenceException;
 import com.app.phonecontacts.model.entity.Contact;
+import com.app.phonecontacts.model.entity.User;
+import com.app.phonecontacts.model.security.UserDetailsImpl;
 import com.app.phonecontacts.repository.ContactRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PostFilter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class ContactService {
     private final ContactRepository repository;
+    private final UserService userService;
 
-    public Contact create(Contact contact) {
+    public Contact create(Contact contact, long ownerId) {
         if (contact != null) {
-            contact.setOwner("isNeededToBeChanged");
+            contact.setOwner(userService.readById(ownerId));
             return repository.save(contact);
         }
         throw new NullEntityReferenceException("Contact cannot be 'null'");
@@ -31,17 +38,17 @@ public class ContactService {
         if (contact != null) {
             var existedTask = readById(contactId);
             contact.setId(existedTask.getId());
+            contact.setOwner(existedTask.getOwner());
             return repository.save(contact);
         }
         throw new NullEntityReferenceException("Contact cannot be 'null'");
     }
 
     public void delete(long id) {
-        Contact contact = readById(id);
-        repository.delete(contact);
+        repository.delete(readById(id));
     }
 
-    // ToDo add PostFilter for retrieving relevant list of contacts (for certain user)
+    @PostFilter("filterObject.owner.id == authentication.principal.user.id")
     public List<Contact> getAll() {
         return repository.findAll();
     }

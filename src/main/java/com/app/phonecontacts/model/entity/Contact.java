@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,7 +27,7 @@ public class Contact {
     @Column(name = "numbers")
     private String numbers;
 
-    // TODO: change to User entity + add ManyToOne
-    @Column(name = "owner_id", nullable = false)
-    private String owner;
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 }
