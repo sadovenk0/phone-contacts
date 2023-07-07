@@ -7,7 +7,6 @@ import com.app.phonecontacts.model.security.UserDetailsImpl;
 import com.app.phonecontacts.service.AuthorizationService;
 import com.app.phonecontacts.service.ContactService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;

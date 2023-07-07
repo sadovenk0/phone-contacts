@@ -1,8 +1,6 @@
 package com.app.phonecontacts.service;
 
-import com.app.phonecontacts.model.entity.Contact;
 import com.app.phonecontacts.model.security.UserDetailsImpl;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
