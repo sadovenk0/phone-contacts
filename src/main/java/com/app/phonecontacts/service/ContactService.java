@@ -3,21 +3,14 @@ package com.app.phonecontacts.service;
 import com.app.phonecontacts.exception.DuplicateItemsException;
 import com.app.phonecontacts.exception.NullEntityReferenceException;
 import com.app.phonecontacts.model.dto.contact.ContactRequest;
-import com.app.phonecontacts.model.dto.user.UserRequest;
 import com.app.phonecontacts.model.entity.Contact;
-import com.app.phonecontacts.model.entity.User;
-import com.app.phonecontacts.model.security.UserDetailsImpl;
 import com.app.phonecontacts.repository.ContactRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PostFilter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 

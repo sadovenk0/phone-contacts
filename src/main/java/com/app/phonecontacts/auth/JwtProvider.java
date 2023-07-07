@@ -1,10 +1,12 @@
 package com.app.phonecontacts.auth;
 
+import com.app.phonecontacts.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +17,9 @@ import java.util.Date;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class JwtProvider {
+    private final UserDetailsServiceImpl userDSI;
     private static final String SECRET_KEY
             = "EgDM8XhXJd00DX4xCHV3Tj21OQuTskA6DLXrhtklKJHSQn8W2QoBm/x3sUIx+Yr7nQ5bkl1ewcYUjF1i9nW4jQ==";
 
@@ -30,7 +34,11 @@ public class JwtProvider {
     }
 
     public boolean validateToken(String token) {
-        getClaims(token);
+        try {
+            userDSI.loadUserByUsername(getLoginFromToken(token));
+        } catch(Exception e) {
+            return false;
+        }
         return true;
     }
 

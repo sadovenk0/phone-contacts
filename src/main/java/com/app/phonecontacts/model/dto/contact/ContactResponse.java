@@ -1,7 +1,6 @@
 package com.app.phonecontacts.model.dto.contact;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
