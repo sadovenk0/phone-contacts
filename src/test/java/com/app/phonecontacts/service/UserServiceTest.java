@@ -33,9 +33,6 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    @MockBean
-    private PasswordEncoder passwordEncoder;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
