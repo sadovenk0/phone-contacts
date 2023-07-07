@@ -8,6 +8,7 @@ import com.app.phonecontacts.model.entity.Contact;
 import com.app.phonecontacts.model.entity.User;
 import com.app.phonecontacts.model.security.UserDetailsImpl;
 import com.app.phonecontacts.repository.ContactRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,8 @@ public class ContactService {
 
     public Contact create(Contact contact, long ownerId) {
         if (contact != null) {
+            isContactWithNameExist(contact.getName());
+
             contact.setOwner(userService.readById(ownerId));
             return repository.save(contact);
         }
@@ -38,8 +42,14 @@ public class ContactService {
                 () -> new EntityNotFoundException("Contact with id " + id + " not found"));
     }
 
+    public Optional<Contact> readByName(String name) {
+        return repository.findByName(name);
+    }
+
     public Contact update(Contact contact, long contactId) {
         if (contact != null) {
+            isContactWithNameExist(contact.getName());
+
             var existedTask = readById(contactId);
             contact.setId(existedTask.getId());
             contact.setOwner(existedTask.getOwner());
@@ -68,5 +78,11 @@ public class ContactService {
         }
 
         return request;
+    }
+
+    private void isContactWithNameExist(String name) {
+        if (readByName(name).isPresent()) {
+            throw new EntityExistsException("Contact with name " + name + " already exists");
+        }
     }
 }

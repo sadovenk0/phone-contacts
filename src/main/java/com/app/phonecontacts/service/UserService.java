@@ -3,7 +3,6 @@ package com.app.phonecontacts.service;
 import com.app.phonecontacts.model.entity.User;
 import com.app.phonecontacts.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
